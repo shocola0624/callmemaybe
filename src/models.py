@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Any, Dict, TypedDict
 from pydantic import BaseModel
 
 
@@ -20,8 +20,8 @@ class FunctionDef(BaseModel):
     returns: ParameterDef
 
 
-class Output(BaseModel):
+class Output(TypedDict):
     """TODO"""
     prompt: str
     name: str
-    parameters: Dict[str, ParameterDef]
+    parameters: Dict[str, Any]
