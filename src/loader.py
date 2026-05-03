@@ -20,7 +20,7 @@ def get_prompts_from_json(path: str) -> List[Prompt]:
 
     except OSError:
         raise ValueError(
-            f"Error ({path}): An error occured while reading {path}."
+            f"Error ({path}): An error occurred while reading {path}."
         )
 
     except json.JSONDecodeError as e:
@@ -46,11 +46,11 @@ def get_funcs_from_json(path: str) -> List[FunctionDef]:
         with open(path, "r") as f:
             raw_data = json.load(f)
 
-        return [FunctionDef.model_validate(d) for d in raw_data]
+        funcs = [FunctionDef.model_validate(d) for d in raw_data]
 
     except OSError:
         raise ValueError(
-            f"Error ({path}): An error occured while reading {path}."
+            f"Error ({path}): An error occurred while reading {path}."
         )
 
     except json.JSONDecodeError as e:
@@ -62,3 +62,20 @@ def get_funcs_from_json(path: str) -> List[FunctionDef]:
         raise ValueError(
             f"Error ({path}): Invalid definition json format."
         )
+
+    names = []
+    descs = []
+    for f in funcs:
+        if f.name in names:
+            raise ValueError(
+                "Error: Defined the same name several times."
+            )
+        names.append(f.name)
+
+        if f.description in descs:
+            raise ValueError(
+                "Error: Defined the same description several times."
+            )
+        descs.append(f.description)
+
+    return funcs
