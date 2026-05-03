@@ -1,14 +1,9 @@
-import argparse
 import sys
+import argparse
+from .defines import DEF_PATH, INPUT_PATH, OUTPUT_PATH
 from .loader import get_prompts_from_json, get_funcs_from_json
 from .constrained_decoder import call_llm
 from .writer import write_output_file
-
-
-# Default File Path
-DEF_PATH = "data/input/functions_definition.json"
-INPUT_PATH = "data/input/function_calling_tests.json"
-OUTPUT_PATH = "data/output/function_calls.json"
 
 
 def main() -> None:
@@ -26,19 +21,19 @@ def main() -> None:
     input_path = args.input
     output_path = args.output
 
-    # 2. Read and validate JSON
     try:
+        # 2. Read and validate JSON
         prompts = get_prompts_from_json(input_path)
         funcs = get_funcs_from_json(def_path)
 
+        # 3. LLM
+        output_data = call_llm(prompts, funcs)
+
+        # 4. Write the result into the output file
+        write_output_file(output_path, output_data)
+
     except ValueError as e:
         print(e, file=sys.stderr)
-
-    # 3. LLM
-    output_data = call_llm(prompts, funcs)
-
-    # 4. Write the result into the output file
-    write_output_file(output_path, output_data)
 
 
 if __name__ == "__main__":
