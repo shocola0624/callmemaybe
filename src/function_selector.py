@@ -30,7 +30,7 @@ def select_function(
         "Answer with the function name in double quotes only: \""
     )
 
-    prompt_token_ids = model.encode(prompt_for_func)[0].tolist()
+    prompt_token_ids = get_token_ids(model, prompt_for_func)
     generated_token_ids: List[int] = []
     for _ in range(MAX_TOKENS_FOR_EACH_CALL):
         # Calculate logits and mask them
