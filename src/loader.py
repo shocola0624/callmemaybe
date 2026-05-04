@@ -5,7 +5,18 @@ import json
 
 
 def get_prompts_from_json(path: str) -> List[Prompt]:
-    """TODO"""
+    """Load and validate a list of prompt objects from a JSON file.
+
+    Args:
+        path: The file system path to the JSON file.
+
+    Returns:
+        A list of validated Prompt objects.
+
+    Raises:
+        ValueError: If the file is not a JSON, the file cannot be read,
+            or the content fails JSON decoding and model validation.
+    """
 
     if path[-5:] != ".json":
         raise ValueError(
@@ -35,7 +46,18 @@ def get_prompts_from_json(path: str) -> List[Prompt]:
 
 
 def get_funcs_from_json(path: str) -> List[FunctionDef]:
-    """TODO"""
+    """Load and validate function definitions from a JSON file.
+
+    Args:
+        path: Path to the function definition JSON file.
+
+    Returns:
+        A list of validated FunctionDef objects.
+
+    Raises:
+        ValueError: If the file is not a JSON, cannot be read, fails
+            validation, or contains duplicate names or descriptions.
+    """
 
     if path[-5:] != ".json":
         raise ValueError(
