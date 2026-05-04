@@ -14,10 +14,11 @@ def get_next_token_id(
 
 def get_token_ids(
         model: Small_LLM_Model,
-        s: str
+        s: str,
+        is_cached: bool = False
 ) -> List[int]:
     """TODO"""
-    if len(s) <= 1:
+    if is_cached or len(s) <= 1:
         return get_cached_token_ids(model, s)
     return model.encode(s)[0].tolist()
 

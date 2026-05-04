@@ -1,6 +1,6 @@
 from .models import Prompt, FunctionDef, Output
 from .function_selector import select_function
-from .parameter_selector import get_parameter
+from .parameter_selector import get_parameter_value
 from .defines import RESET, RED, ORANGE, YELLOW, GREEN
 from llm_sdk import Small_LLM_Model
 from typing import Dict, List
@@ -46,7 +46,7 @@ def generate_function_call(
     # Select each parameter
     parameters: Dict[str, str] = dict()
     for p in func.parameters.keys():
-        parameter_value = get_parameter(model, user_prompt, func, p)
+        parameter_value = get_parameter_value(model, func, p, user_prompt)
         parameters[p] = parameter_value
         print(f"Parameter '{p}': {YELLOW}{parameter_value}{RESET}")
 
