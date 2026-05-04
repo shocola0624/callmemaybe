@@ -23,6 +23,11 @@ def main() -> None:
     output_path = args.output
 
     try:
+        if not output_path or output_path[-1] == "/":
+            raise ValueError(
+                f"Error: Invalid output file path ({output_path})."
+            )
+
         # 2. Read and validate JSON
         prompts = get_prompts_from_json(input_path)
         funcs = get_funcs_from_json(def_path)

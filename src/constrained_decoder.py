@@ -11,7 +11,22 @@ def call_llm(
         funcs: List[FunctionDef],
         model_name: str = "Qwen/Qwen3-0.6B"
 ) -> List[Output]:
-    """TODO"""
+    """Execute function calling by predicting names and parameters using SLM.
+
+    Process:
+        1. Initialize an instance of the Small_LLM_Model class.
+        2. Process each prompt to identify the appropriate function to call.
+        3. Returns output.
+
+    Args:
+        prompts: A list of prompts from the input.
+        funcs: A list of function definitions.
+        model_name: The name of the language model to be used.
+            Defaults to "Qwen/Qwen3-0.6B".
+
+    Returns:
+        A list containing the generated outputs for each prompt.
+    """
     # Instance LLM class
     print(f"LLM Model: {ORANGE}{model_name}{RESET}")
     model = Small_LLM_Model(model_name)
@@ -34,7 +49,22 @@ def generate_function_call(
         funcs: List[FunctionDef],
         user_prompt: str
 ) -> Output:
-    """TODO"""
+    """Generate function call by sequentially predicting names and parameters.
+
+    Process:
+        1. Identify the most suitable function name from the provided list.
+        2. Iterate through each parameter of the selected function.
+        3. Use the SLM to determine the specific value for each parameter.
+        4. Construct and return an Output object.
+
+    Args:
+        model: The SML instance used for inference.
+        funcs: A list of available function definitions.
+        user_prompt: One of raw prompts from the input.
+
+    Returns:
+        An Output object containing the function name and parameters.
+    """
     # Print user prompt
     print(f"Prompt: {GREEN}{user_prompt}{RESET}")
 
@@ -50,8 +80,8 @@ def generate_function_call(
         parameters[p] = parameter_value
         print(f"Parameter '{p}': {YELLOW}{parameter_value}{RESET}")
 
-    return {
-        "prompt": user_prompt,
-        "name": func_name,
-        "parameters": parameters
-    }
+    return Output(
+        prompt=user_prompt,
+        name=func_name,
+        parameters=parameters
+    )
