@@ -1,6 +1,7 @@
 import sys
 import argparse
-from .defines import DEF_PATH, INPUT_PATH, OUTPUT_PATH
+from .defines import DEF_PATH, INPUT_PATH, OUTPUT_PATH, \
+    RESET, RED
 from .loader import get_prompts_from_json, get_funcs_from_json
 from .constrained_decoder import call_llm
 from .writer import write_output_file
@@ -33,6 +34,7 @@ def main() -> None:
         write_output_file(output_path, output_data)
 
     except ValueError as e:
+        print(f"{RED}=====  ERROR  ====={RESET}")
         print(e, file=sys.stderr)
 
 
