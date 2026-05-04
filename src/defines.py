@@ -21,3 +21,28 @@ PURPLE = "\x1b[38;5;93m"
 MAROON = "\x1b[38;5;124m"
 BROWN = "\x1b[38;5;94m"
 BLACK = "\x1b[38;5;16m"
+
+# Symbols
+SYMBOL_MAP = {
+    "*": ["asterisk", "asterisks", "star", "stars"],
+    "#": ["hash", "hashes", "pound", "pounds", "hashtag", "hashtags",
+          "number sign", "number signs"],
+    "$": ["dollar", "dollars", "dollar sign", "dollar signs"],
+    "@": ["at", "at sign", "at signs", "at symbol"],
+    "&": ["ampersand", "ampersands"],
+    "?": ["question mark", "question marks"],
+    "!": ["exclamation", "exclamations",
+          "exclamation mark", "exclamation marks",
+          "exclamation point", "exclamation points",
+          "bang", "bangs"],
+    "%": ["percent", "percents", "percent sign", "percent signs"],
+    "^": ["caret", "carets", "circumflex"],
+    "~": ["tilde", "tildes"],
+    "_": ["underscore", "underscores"],
+    "-": ["dash", "dashes", "hyphen", "hyphens", "minus", "minus sign"],
+    "+": ["plus", "pluses", "plus sign", "plus signs"],
+    "=": ["equals", "equal sign", "equals sign"],
+    "/": ["slash", "slashes", "forward slash"],
+    "\\": ["backslash", "backslashes"],
+    "|": ["pipe", "pipes", "vertical bar"],
+}

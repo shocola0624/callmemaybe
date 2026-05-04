@@ -35,19 +35,21 @@ def select_designated_name(
 ) -> str:
     """TODO prompt to generate only a selected name"""
     selected_name = ""
-    names_token_ids = [get_token_ids(model, f) for f in name_list]
+    names_token_ids = [get_token_ids(model, n) for n in name_list]
     prompt_token_ids = get_token_ids(model, prompt)
     generated_token_ids: List[int] = []
 
     for _ in range(MAX_TOKENS_FOR_EACH_CALL):
-        # Calculate logits and mask them
+        # Calculate logits
         logits = model.get_logits_from_input_ids(prompt_token_ids)
+
+        # Get next token id from logits
         masked_logits = mask_logits_by_names(
             model, logits, names_token_ids, generated_token_ids
         )
-
-        # Get next token id from logits
         next_token_id = get_next_token_id(masked_logits)
+
+        # EOS token
         if eos_token_id is not None and next_token_id == eos_token_id:
             break
 

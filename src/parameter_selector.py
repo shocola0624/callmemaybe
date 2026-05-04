@@ -1,4 +1,4 @@
-from .defines import MAX_TOKENS_FOR_EACH_CALL
+from .defines import MAX_TOKENS_FOR_EACH_CALL, SYMBOL_MAP
 from .models import FunctionDef
 from .prompt_builder import build_param_prompt
 from .tokenizer import get_token_ids, get_next_token_id, get_token_from_id, \
@@ -15,32 +15,45 @@ def get_parameter_value(
         user_prompt: str
 ) -> str:
     """TODO"""
-    # LLM generates parameter value enclosed in ""
-    param_value = ""
     param_type = func.parameters[parameter].type
-    dq_token_id = get_token_ids(model, "\"")[0]
 
-    # Category for string parameters
-    # if param_type == "string":
-    #     category = get_category_for_str(model, func, parameter, user_prompt)
-    # else:
-    #     category = ""
+    # LLM generates parameter value enclosed in ""
+    dq_token_id = get_token_ids(model, "\"")[0]
 
     # Build prompt
     prompt_for_param = build_param_prompt(func, parameter, user_prompt)
 
-    prompt_token_ids = get_token_ids(model, prompt_for_param)
+    generated_value = generate_parameter_value(
+        model, param_type, prompt_for_param, dq_token_id
+    )
+
+    if param_type == "string":
+        return normalize_symbol_word(generated_value)
+    return generated_value
+
+
+def generate_parameter_value(
+        model: Small_LLM_Model,
+        param_type: str,
+        prompt: str,
+        eos_token_id: int | None = None
+) -> str:
+    """TODO"""
+    param_value = ""
+    prompt_token_ids = get_token_ids(model, prompt)
     generated_token_ids: List[int] = []
+
     for _ in range(MAX_TOKENS_FOR_EACH_CALL):
-        # Calculate logits and mask them
+        # Calculate logits
         logits = model.get_logits_from_input_ids(prompt_token_ids)
+
+        # Get next token id from logits
         masked_logits = mask_param_val_logits(
             model, logits, param_type
         )
-
-        # Get next token id from logits
         next_token_id = get_next_token_id(masked_logits)
-        if next_token_id == dq_token_id:
+
+        if eos_token_id is not None and next_token_id == eos_token_id:
             return param_value
 
         # Add next token id and letter
@@ -49,28 +62,12 @@ def get_parameter_value(
         param_value += get_token_from_id(model, next_token_id)
 
         if param_value.count("\"") >= 1:
-            return param_value.split("\"")[0]
+            parts = param_value.split("\"")
+            return parts[0] if parts else ""
 
     raise ValueError(
         "Error: Reached to the max tokens.\n"
-        f"Prompt: {user_prompt}\n"
-        f"Parameter: {parameter}"
-        f"{param_value}"
     )
-
-
-def get_category_for_str(
-        model: Small_LLM_Model,
-        func: FunctionDef,
-        parameter: str,
-        user_prompt: str
-) -> str:
-    """TODO"""
-    categories = [
-        get_token_ids(model, c, True)
-        for c in ("symbol", "literal", "regex")
-    ]
-    pass
 
 
 def mask_param_val_logits(
@@ -92,3 +89,15 @@ def mask_param_val_logits(
         masked_logits[dq_token_id] = logits[dq_token_id]
 
     return masked_logits
+
+
+def normalize_symbol_word(
+        generated_value: str
+) -> str:
+    """TODO"""
+    word_to_symbol = {i: k for k, v in SYMBOL_MAP.items() for i in v}
+    try:
+        w: str = word_to_symbol[generated_value]
+        return w
+    except KeyError:
+        return generated_value

@@ -37,8 +37,8 @@ def build_param_prompt(
         "- string whose name implies regex/pattern: "
         "output a minimal regex. Do NOT wrap in capture groups '()' "
         "unless the request explicitly says 'capture' or 'group'.\n"
-        "- string otherwise: copy the literal text verbatim from the request.\n\n"
-        "--- Examples ---\n\n"
+        "- string otherwise: copy the literal text verbatim from the request."
+        "\n\n--- Examples ---\n\n"
         'Function: fn_add_numbers (a:number, b:number)\n'
         'Request: "What is the sum of 2 and 3?"\n'
         'Parameter "a": "2"\n'
@@ -90,7 +90,8 @@ def build_param_prompt(
         # --- explicit capture group example for the rare case ---
         'Function: fn_substitute (source_string:string, regex:string, '
         'replacement:string)\n'
-        'Request: "Capture all digits in code42 as a group and replace with X"\n'
+        'Request: "Capture all digits in '
+        'code42 as a group and replace with X"\n'
         'Parameter "source_string": "code42"\n'
         'Parameter "regex": "(\\d+)"\n'
         'Parameter "replacement": "X"\n\n'
