@@ -21,5 +21,5 @@ exclude = [
 ]
 
 [[tool.mypy.overrides]]
-module = "llm_sdk"
+module = "llm_sdk.*"
 ignore_errors = true
