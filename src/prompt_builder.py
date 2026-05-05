@@ -6,7 +6,15 @@ def build_func_prompt(
         funcs: List[FunctionDef],
         user_prompt: str
 ) -> str:
-    """TODO"""
+    """Construct a prompt to guide the SLM in selecting the correct function.
+
+    Args:
+        funcs: A list of available function definitions.
+        user_prompt: The raw text input provided by the user.
+
+    Returns:
+        A formatted string containing function descriptions and the user request.
+    """
     func_descriptions = [f"- {f.name}: {f.description}" for f in funcs]
     descriptions = "\n".join(func_descriptions)
     return (
@@ -23,7 +31,16 @@ def build_param_prompt(
         parameter: str,
         user_prompt: str
 ) -> str:
-    """TODO"""
+    """Construct a prompt to extract a specific parameter value from the input.
+
+    Args:
+        func: The function definition including its signature.
+        parameter: The name of the target parameter to extract.
+        user_prompt: The raw text input provided by the user.
+
+    Returns:
+        A formatted string guiding the SLM to provide the parameter value.
+    """
     sig = ", ".join(
         f"{n}:{p.type}" for n, p in func.parameters.items()
     )
