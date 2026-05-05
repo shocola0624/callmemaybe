@@ -1,8 +1,9 @@
 from .models import FunctionDef
+from typing import List
 
 
 def build_func_prompt(
-        funcs: FunctionDef,
+        funcs: List[FunctionDef],
         user_prompt: str
 ) -> str:
     """TODO"""

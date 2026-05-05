@@ -85,19 +85,19 @@ def get_funcs_from_json(path: str) -> List[FunctionDef]:
             f"Error ({path}): Invalid definition json format."
         )
 
-    names = []
-    descs = []
-    for f in funcs:
-        if f.name in names:
+    names: List[str] = []
+    descs: List[str] = []
+    for func in funcs:
+        if func.name in names:
             raise ValueError(
                 "Error: Defined the same name several times."
             )
-        names.append(f.name)
+        names.append(func.name)
 
-        if f.description in descs:
+        if func.description in descs:
             raise ValueError(
                 "Error: Defined the same description several times."
             )
-        descs.append(f.description)
+        descs.append(func.description)
 
     return funcs
