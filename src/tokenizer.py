@@ -41,17 +41,38 @@ def get_token_from_id(
     return model.decode([token_id])
 
 
-@functools.lru_cache
 def get_number_token_ids(
-        model: Small_LLM_Model
+        model: Small_LLM_Model,
+        param_value: str
 ) -> List[int]:
+    """TODO"""
+    vocab = get_vocab_file(model)
+
+    if len(param_value) == 0:
+        return [
+            v for k, v in vocab.items() if k.isdigit() or
+            (k[0] == "-" and (len(k) == 1 or k[1:].isdigit()))
+        ]
+
+    if param_value.count(".") <= 0:
+        return [
+            v for k, v in vocab.items() if k.isdigit() or k == "."
+        ]
+
+    return [v for k, v in vocab.items() if k.isdigit()]
+
+
+@functools.lru_cache
+def get_vocab_file(
+        model: Small_LLM_Model
+) -> Dict[str, int]:
     """TODO"""
     vocab_path = model.get_path_to_vocab_file()
     try:
         with open(vocab_path, "r") as f:
             vocab: Dict[str, int] = json.load(f)
 
-        return [v for k, v in vocab.items() if k.isdigit()]
+        return vocab
 
     except OSError:
         raise ValueError(
