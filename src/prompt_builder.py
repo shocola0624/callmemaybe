@@ -13,7 +13,7 @@ def build_func_prompt(
         user_prompt: The raw text input provided by the user.
 
     Returns:
-        A formatted string containing function descriptions and the user request.
+        A formatted string containing function descriptions and user prompt.
     """
     func_descriptions = [f"- {f.name}: {f.description}" for f in funcs]
     descriptions = "\n".join(func_descriptions)
