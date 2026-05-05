@@ -18,8 +18,10 @@ def _entry_point() -> None:
         sys.exit(1)
 
     except KeyboardInterrupt:
-        print("\nThe process has been successfully interrupted.\n",
-            file=sys.stdout)
+        print(
+            "\nThe process has been successfully interrupted.\n",
+            file=sys.stdout
+        )
         sys.exit(0)
 
 
