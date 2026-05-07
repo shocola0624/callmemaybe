@@ -54,6 +54,44 @@ Brief is Betterより、0.6Bモデルで推論は難しいと判断。
 
 ### Makefile
 
+#### Installation
+```bash
+make install
+```
+Install project dependencies using `uv`.
+
+#### Execution
+```bash
+make run
+
+make run-flag  # Run the main script with flags to specify file paths
+
+make debug  # Run the main script in debug mode using pdb
+```
+Execute the main script of the project.
+By default, the program will read input files from the data/input/ directory and write output to the data/output/ directory.
+You can optionally specify custom paths using the `--input` and `--output` arguments.
+
+**Flags:**
+- `--functions_definition`
+- `--input`
+- `--output`
+
+#### Other commands
+```bash
+make clean
+
+make fclean
+```
+Remove temporary files or caches.
+`make fclean` also removes venv files in addition to the files removed by `make clean`.
+
+```bash
+make lint
+
+make lint-strict
+```
+Execute flake8 and mypy command for static type checking.
 
 ## Resources
 
