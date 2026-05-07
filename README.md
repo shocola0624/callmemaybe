@@ -26,19 +26,28 @@ This enforces both the selection of a valid function name and the generation of 
 JSON structure is assembled deterministically by the program — the model never emits braces, commas, or quotes.
 The model's only job is to decide **which function to call** and **what values to assign to each parameter**. Constrained decoding ensures those decisions are drawn from the valid candidate set.
 
-### Algorithm explanation
+### Algorithm Explanation
+
+#### Overview of Constrained Decoding
 
 
-### Design decisions
+#### Function Calling
+
+##### 1. Function Selection
+
+##### 2. Parameter Value Selection
+
+
+### Design Decisions
 Brief is Betterより、0.6Bモデルで推論は難しいと判断。
 
-### Performance analysis
+### Performance Analysis
 
-### Challenges faced
+### Challenges Faced
 
-### Testing strategy
+### Testing Strategy
 
-### Example usage
+### Example Usage
 
 ### Bonus
 - Performance optimizations (caching, batching)
@@ -50,7 +59,7 @@ Brief is Betterより、0.6Bモデルで推論は難しいと判断。
 
 ### Requirements
 - Python 3.10+
-- [uv](https://github.com/astral-sh/uv)
+- uv
 
 ### Makefile
 
@@ -77,7 +86,7 @@ You can optionally specify custom paths using the `--input` and `--output` argum
 - `--input`
 - `--output`
 
-#### Other commands
+#### Other Commands
 ```bash
 make clean
 
@@ -96,6 +105,8 @@ Execute flake8 and mypy command for static type checking.
 ## Resources
 
 ### Documentation
+- [LLM Structured Output and Constrained Decoding Practical Guide: From JSON Schema to Production Application](https://www.youngju.dev/blog/llm/2026-03-07-llm-structured-output-constrained-decoding-json-schema.en)
+
 **mypy**
 - [The mypy configuration file](https://mypy.readthedocs.io/en/stable/config_file.html)
 
