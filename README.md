@@ -50,6 +50,7 @@ For each parameter declared in the selected function's schema, the model generat
 |----------------|------------------------------------------------------|
 | `number`       | digits (`0–9`), `-`, `.`                             |
 | `string`       | all characters                                       |
+| `boolean`      | tokens forming `true` or `false`                     |
 
 The vocabulary JSON file (obtained via `get_path_to_vocab_file()`) provides a mapping from every token string to its ID. This mapping is used at each generation step to determine which tokens can validly extend the value being built.
 
