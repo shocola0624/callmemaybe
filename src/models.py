@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Any, Dict
 from pydantic import BaseModel
 
 
@@ -24,4 +24,4 @@ class Output(BaseModel):
     """Prompt and its extracted function call results."""
     prompt: str
     name: str
-    parameters: Dict[str, str]
+    parameters: Dict[str, Any]

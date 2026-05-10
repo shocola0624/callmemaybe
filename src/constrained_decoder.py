@@ -3,7 +3,7 @@ from .function_selector import select_function
 from .parameter_selector import get_parameter_value
 from .defines import RESET, RED, ORANGE, YELLOW, GREEN
 from llm_sdk import Small_LLM_Model
-from typing import Dict, List
+from typing import Any, Dict, List
 
 
 def call_llm(
@@ -74,7 +74,7 @@ def generate_function_call(
     print(f"Function: {RED}{func_name}{RESET}")
 
     # Select each parameter
-    parameters: Dict[str, str] = dict()
+    parameters: Dict[str, Any] = dict()
     for p in func.parameters.keys():
         parameter_value = get_parameter_value(model, func, p, user_prompt)
         parameters[p] = parameter_value
